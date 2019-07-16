@@ -9,7 +9,8 @@
         </h1>
 
         @foreach ($posts as $post)
-            <!-- Blog Post -->
+                <!-- Blog Post -->
+
             <div class="card mb-4">
                 <img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
                 <div class="card-body">
@@ -25,12 +26,14 @@
                 <div class="card-footer text-muted">
                     Tags:
                     @foreach ($post->tags as $tag)
-                        <a href="">{{ $tag->title }}</a>
+                        <a href="">{{ $tag->title }}</a> |
                     @endforeach
                 </div>
             </div>
             <!-- END Blog Post -->
         @endforeach
+
+        {{ $posts->render() }}
 
     </div>
 @endsection

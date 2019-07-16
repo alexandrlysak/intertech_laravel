@@ -10,7 +10,7 @@ class Category extends Model
     /**
      * @return HasMany
      */
-    public function getPosts() {
+    public function posts() {
         return $this->hasMany(Post::class, 'category_id');
     }
 }

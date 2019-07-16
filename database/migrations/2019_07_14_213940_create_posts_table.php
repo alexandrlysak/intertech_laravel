@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('thumbnail',255)->nullable()->comment('Post thumbnail');
             $table->text('shortDescription')->nullable()->comment('Post short description');
             $table->text('fullDescription')->nullable()->comment('Post full description');
-            $table->string('url',255)->nullable()->comment('Post url');
+            $table->string('slug',255)->nullable()->comment('Post slug');
             $table->unsignedInteger('views')->nullable()->default(0)->comment('Post views count');
             $table->unsignedInteger('likes')->nullable()->default(0)->comment('Post likes count');
 

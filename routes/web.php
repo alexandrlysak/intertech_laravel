@@ -18,6 +18,7 @@ Route::get('/', 'Frontend\MainController@indexAction')->name('frontend-main');
 
 Auth::routes();
 
-Route::get('/category/{slug}', 'Frontend\CategoryController@indexAction')->name('frontend-category');
 
-Route::get('/post/{url}', 'Frontend\PostController@indexAction')->name('frontend-post');
+Route::get('/category/{slug}', 'Frontend\CategoryController@categoryAction')->name('frontend-category');
+
+Route::get('/post/{slug}', 'Frontend\PostController@postAction')->name('frontend-post');

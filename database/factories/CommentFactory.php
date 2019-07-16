@@ -10,15 +10,9 @@ use Faker\Generator as Faker;
 $factory->define(Comment::class, function (Faker $faker) {
     return [
         'content' => $faker->realText(100),
-
         'author_id' => function () {
             $user = User::all()->random(1)->first();
             return $user->id;
-        },
-
-        'post_id' => function () {
-            $post = Post::all()->random(1)->first();
-            return $post->id;
         }
     ];
 });

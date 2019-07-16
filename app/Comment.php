@@ -11,7 +11,7 @@ class Comment extends Model
     /**
      * @return BelongsTo
      */
-    public function getAuthor()
+    public function author()
     {
         return $this->belongsTo(User::class);
     }
@@ -19,7 +19,7 @@ class Comment extends Model
     /**
      * @return BelongsTo
      */
-    public function getPost()
+    public function post()
     {
         return $this->belongsTo(Post::class);
     }
@@ -27,7 +27,7 @@ class Comment extends Model
     /**
      * @return HasMany
      */
-    public function getAnswers() {
+    public function answers() {
         return $this->hasMany(Answer::class, 'comment_id');
     }
 }

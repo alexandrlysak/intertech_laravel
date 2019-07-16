@@ -9,17 +9,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Answer::class, function (Faker $faker) {
     return [
-
         'content' => $faker->realText(100),
-
         'author_id' => function () {
             $user = User::all()->random(1)->first();
             return $user->id;
-        },
-
-        'comment_id' => function () {
-            $comment = Comment::all()->random(1)->first();
-            return $comment->id;
         }
     ];
 });
