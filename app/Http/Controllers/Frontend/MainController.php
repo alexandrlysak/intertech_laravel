@@ -29,7 +29,9 @@ class MainController extends Controller
     public function indexAction()
     {
         $this->data['categories'] = Category::all();
-        $this->data['posts'] = Post::orderBy('updated_at', 'desc')->take(3)->get();
+        $posts = Post::orderBy('updated_at', 'desc')->take(3)->get();
+    
+        $this->data['posts'] = $posts;
 
         return view('frontend.main', $this->data);
     }

@@ -38,8 +38,13 @@ class CreateTestData extends Command
      */
     public function handle()
     {
-        $this->call('storage:link');
         $path = public_path().'/storage/images';
+        
+        if (File::exists($path)) {
+            File::deleteDirectory($path);
+        }
+        $this->call('storage:link');
+        
         File::makeDirectory($path, $mode = 0777, true, true);
         
         $this->call('migrate:refresh', ['--seed' => 'default']);

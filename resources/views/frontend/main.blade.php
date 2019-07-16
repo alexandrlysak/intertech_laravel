@@ -74,7 +74,14 @@
                         </div>
                         <div class="card-footer text-muted">
                             Posted on {{ $post->created_at }} by
-                            <a href="#">{{ $post->author }}</a>
+                            <a href="#">{{ $post->author->name }}</a> |
+                            Views: {{ $post->views }} | Likes: {{ $post->likes }} | Comments: {{ $post->comments->count() }}
+                        </div>
+                        <div class="card-footer text-muted">
+                            Tags:
+                            @foreach ($post->tags as $tag)
+                                <a href="">{{ $tag->title }}</a>
+                            @endforeach
                         </div>
                 </div>
                 <!-- END Blog Post -->

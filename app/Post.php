@@ -12,12 +12,12 @@ class Post extends Model
     /**
      * @return BelongsTo
      */
-    public function getAuthor()
+    public function author()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getCategory()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
@@ -25,15 +25,14 @@ class Post extends Model
     /**
      * @return HasMany
      */
-    public function getComments() {
+    public function comments() {
         return $this->hasMany(Comment::class, 'post_id');
     }
-
-
+    
     /**
      * @return BelongsToMany
      */
-    public function getTags() {
+    public function tags() {
         return $this->belongsToMany(Tag::class);
     }
 }
