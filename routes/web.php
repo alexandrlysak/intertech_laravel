@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', 'Frontend\MainController@indexAction')->name('frontend-main');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/category/{slug}', 'Frontend\CategoryController@indexAction')->name('frontend-category');
+
+Route::get('/post/{url}', 'Frontend\PostController@indexAction')->name('frontend-post');

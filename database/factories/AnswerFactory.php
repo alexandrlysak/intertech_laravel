@@ -2,13 +2,14 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
+use App\Answer;
 use App\Comment;
-use App\Post;
 use App\User;
 use Faker\Generator as Faker;
 
-$factory->define(Comment::class, function (Faker $faker) {
+$factory->define(Answer::class, function (Faker $faker) {
     return [
+
         'content' => $faker->realText(100),
 
         'author_id' => function () {
@@ -16,9 +17,9 @@ $factory->define(Comment::class, function (Faker $faker) {
             return $user->id;
         },
 
-        'post_id' => function () {
-            $post = Post::all()->random(1)->first();
-            return $post->id;
+        'comment_id' => function () {
+            $comment = Comment::all()->random(1)->first();
+            return $comment->id;
         }
     ];
 });
