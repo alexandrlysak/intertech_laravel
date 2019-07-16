@@ -37,6 +37,10 @@ class CreateTestData extends Command
      */
     public function handle()
     {
+        $this->call('storage:link');
+        $path = public_path().'/storage/images';
+        File::makeDirectory($path, $mode = 0777, true, true);
+        
         $this->call('migrate:refresh', ['--seed' => 'default']);
     }
 }
