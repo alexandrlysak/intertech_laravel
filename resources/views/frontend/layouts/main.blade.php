@@ -8,13 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Intertech Test | Blog Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('/assets/css/blog-home.css') }}" rel="stylesheet">
+
 
 </head>
 
@@ -61,18 +65,8 @@
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
 
-            <!-- Search Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Search</h5>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
-                    </div>
-                </div>
-            </div>
+            @section('sorting')
+            @show
 
             <!-- Categories Widget -->
             <div class="card my-4">
@@ -130,9 +124,13 @@
     <!-- /.container -->
 </footer>
 
+@section('scripts')
 <!-- Bootstrap core JavaScript -->
 <script src="{{ asset('/assets/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
+@show
 
 </body>
 

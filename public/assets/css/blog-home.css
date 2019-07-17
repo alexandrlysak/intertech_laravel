@@ -10,3 +10,12 @@ body {
 .card-img-top {
 	width: 50%;
 }
+
+
+.info {
+    font-size: 14px;
+}
+
+.showMoreButton {
+	margin: 15px;
+}

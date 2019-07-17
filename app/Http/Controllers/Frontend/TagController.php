@@ -6,39 +6,42 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Category;
 use App\Post;
+use App\Tag;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class TagController extends Controller
 {
     private $data = [];
 
-
-    public function indexAction()
-    {
-
-    }
-
-    public function categoryAction($slug)
+    public function postsAction($slug)
     {
         if (!$slug || $slug == '') {
             abort(404);
         }
 
-        $currentCategory = Category::where(['slug' => $slug])->first();
-        if (!$currentCategory) {
+        $tag = Tag::where(['slug' => $slug])->first();
+        if (!$tag) {
             abort(404);
         }
 
-        $posts = Post::where(['category_id' => $currentCategory->id])->paginate(3);
+        $posts = Post::whereHas('tags', function($q) use ($tag)
+{
+    $q->whereIn('tag_id', $tag);
+})->paginate(3);
+
+        
+        // $posts = Post::whereHas('tags', function($query) use ($tag) {
+        //     $query->where($tag);
+        // })->paginate(3);
         $categories = Category::all();
 
         $this->data['posts'] = $posts;
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
-            'name' => 'Category',
-            'title' => $currentCategory->title
+            'name' => 'Tag',
+            'title' => $tag->title
         ];
         return view('frontend.posts', $this->data);
     }

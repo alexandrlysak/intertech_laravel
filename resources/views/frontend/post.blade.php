@@ -1,5 +1,11 @@
 @extends('frontend.layouts.main')
 
+<style>
+    .info {
+        font-size: 14px;
+    }
+</style>
+
 @section('content')
     <!-- Post Content Column -->
     <div class="col-lg-8">
@@ -13,6 +19,20 @@
             <a href="#">{{ $post->author->name }}</a>
         </p>
 
+        <hr>
+
+        <div>{{ $post->shortDescription }}</div>
+
+        <hr>
+        <div class="info">
+            <strong>Tags: </strong>
+            @foreach($post->tags as $tag)
+                <a href="">{{ $tag->title }}</a> |
+            @endforeach
+            <strong>Views:</strong> {{ $post->views }} |
+            <strong>Likes:</strong> {{ $post->likes }} |
+            <strong>Comments:</strong> {{ $post->comments->count() }}
+        </div>
         <hr>
 
         <!-- Date/Time -->

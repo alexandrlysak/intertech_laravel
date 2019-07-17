@@ -1,35 +1,15 @@
 @extends('frontend.layouts.main')
 
-@section('scripts')
-    @parent
-    <script>
-
-        // Show More posts init
-        jQuery(document).ready(function() {
-            jQuery('.showMoreButton a').on('click', function() {
-
-                showMorePosts('mainPage', '{{url('/')}}', null);
-
-
-            });
-        });
-
-
-    </script>
-@endsection
-
 @section('content')
     <!-- Blog Entries Column -->
     <div class="col-md-8">
 
         <h1 class="my-4">Posts List
-            <small>Secondary Text</small>
+            <small> by {{ $entity['name'] }} : [{{ $entity['title'] }}]</small>
         </h1>
 
-        <div id="postsListWrapper">
         @foreach ($posts as $post)
-        
-            <div class="card mb-4 postItem">
+            <div class="card mb-4">
                 <img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
                 <div class="card-body">
                     <h2 class="card-title">{{ $post->title }}</h2>
@@ -56,14 +36,9 @@
                     </div>
                 </div>
             </div>
-        
         @endforeach
-        </div>
 
-        <div class="showMoreButton">
-            <a href="javascript:void(0);" class="btn btn-success">Show More Posts&rarr;</a>
-        </div>
-        
+        Show More
 
     </div>
 @endsection
@@ -77,17 +52,17 @@
         
         <div class="form-check">
             <label class="form-check-label">
-                <input name="sortDate" type="checkbox" class="form-check-input" value="date" autovomplete="off">Date
+                <input name="date" type="checkbox" class="form-check-input" value="date" autovomplete="off">Date
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input name="sortViews" type="checkbox" class="form-check-input" value="views" autovomplete="off">Views
+                <input name="views" type="checkbox" class="form-check-input" value="views" autovomplete="off">Views
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input name="sortLikes" type="checkbox" class="form-check-input" value="likes" autovomplete="off">Likes
+                <input name="likes" type="checkbox" class="form-check-input" value="likes" autovomplete="off">Likes
             </label>
         </div>
 

@@ -35,4 +35,48 @@ class MainController extends Controller
 
         return view('frontend.main', $this->data);
     }
+
+    public function postAction(Request $request)
+    {
+        if(!$request->ajax()) {
+            return $this->indexAction();
+        }
+
+        $requestData = $request->all();
+
+        $visible = intval($requestData['visible']);
+        $id = $requestData['id'];
+        $sortDate = boolval($requestData['sortDate']);
+        $sortViews = boolval($requestData['sortViews']);
+        $sortLikes = boolval($requestData['sortLikes']);
+
+        switch ($requestData['entity']) {
+
+            case 'mainPage':
+
+                $posts = Post::orderBy('updated_at', 'desc')->take(3)->get();
+
+                break;
+
+            case 'categoryPage':
+                break;
+
+            case 'authorPage':
+                break;
+
+            case 'tagPage':
+                break;
+
+            default:
+                return response()->json([
+                    'code' => 0
+                ]);
+                break;
+        }
+
+        return response()->json([
+            'code' => 1,
+            'html' => view('frontend.layouts.postsList', ['posts' => $posts])->render()
+        ]);
+    }
 }
