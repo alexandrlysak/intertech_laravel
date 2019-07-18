@@ -28,6 +28,17 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">Intertech L</a>
+
+        @auth
+        <span class="navbar-brand">Welcome</span>
+        @endauth
+
+        @guest
+        <!-- ULogin widget -->
+        <div id="uLogin" data-ulogin="display=panel;theme=classic;fields=first_name,last_name;providers=vkontakte,odnoklassniki,mailru,facebook;hidden=other;redirect_uri={{ url('/ulogin') }};mobilebuttons=0;"></div>
+        <!-- END ULogin widget -->
+        @endguest
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -130,6 +141,8 @@
 <script src="{{ asset('/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
+
+<script src="//ulogin.ru/js/ulogin.js"></script>
 
 @show
 

@@ -8,6 +8,7 @@ use App\Post;
 use App\Tag;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Auth;
 
 class MainController extends Controller
 {
@@ -29,14 +30,8 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        // $this->data['categories'] = Category::all();
-        // $posts = Post::orderBy('updated_at', 'desc')->take(3)->get();
-        // $this->data['posts'] = $posts;
-        // return view('frontend.posts', $this->data);
-
         $posts = Post::orderBy('updated_at', 'desc')->take(3)->get();
         $categories = Category::all();
-
         $this->data['posts'] = $posts;
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
