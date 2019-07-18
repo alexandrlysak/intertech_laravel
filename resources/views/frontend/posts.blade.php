@@ -57,7 +57,13 @@
                 <div class="card-footer text-muted">
                     <div class="info">
                         <strong>Views:</strong> {{ $post->views }} |
-                        <strong>Likes:</strong> <a class="likeLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
+                        @auth
+                            <strong>Likes:</strong> <a href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
+                        @endauth
+                            
+                        @guest
+                            <strong>Likes:</strong> <i class="fa fa-heart-o" aria-hidden="true"></i> {{ $post->likes }} |
+                        @endguest
                         <strong>Comments:</strong> {{ $post->comments->count() }}
                     </div>
                 </div>
