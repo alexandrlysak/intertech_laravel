@@ -30,7 +30,7 @@
                 <a href="">{{ $tag->title }}</a> |
             @endforeach
             <strong>Views:</strong> {{ $post->views }} |
-            <strong>Likes:</strong> {{ $post->likes }} |
+            <strong>Likes:</strong> <a class="likeLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
             <strong>Comments:</strong> {{ $post->comments->count() }}
         </div>
         <hr>

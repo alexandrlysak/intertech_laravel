@@ -38,7 +38,9 @@ class CategoryController extends Controller
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
             'name' => 'Category',
-            'title' => $currentCategory->title
+            'page' => 'categoryPage',
+            'title' => $currentCategory->title,
+            'id' => $currentCategory->id
         ];
         return view('frontend.posts', $this->data);
     }

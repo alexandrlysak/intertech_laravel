@@ -26,10 +26,9 @@ class TagController extends Controller
             abort(404);
         }
 
-        $posts = Post::whereHas('tags', function($q) use ($tag)
-{
-    $q->whereIn('tag_id', $tag);
-})->paginate(3);
+        $posts = Post::whereHas('tags', function($q) use ($tag) {
+            $q->whereIn('tag_id', $tag);
+        })->paginate(3);
 
         
         // $posts = Post::whereHas('tags', function($query) use ($tag) {
@@ -41,7 +40,9 @@ class TagController extends Controller
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
             'name' => 'Tag',
-            'title' => $tag->title
+            'page' => 'tagPage',
+            'title' => $tag->title,
+            'id' => $tag->id
         ];
         return view('frontend.posts', $this->data);
     }

@@ -1,5 +1,29 @@
 @extends('frontend.layouts.main')
 
+@section('scripts')
+    @parent
+    <script>
+
+        // Show More posts init
+        jQuery(document).ready(function() {
+            
+            jQuery('.showMoreButton a').on('click', function() {
+                showMorePosts( '{{ $entity['page'] }}', '{{url('/')}}', '{{ $entity["id"]}}');
+            });
+
+            jQuery('#sortWrapper input').on('change', function() {
+                sortingPosts('{{ $entity['page'] }}', '{{url('/sort')}}', '{{ $entity["id"]}}');
+            });
+
+            jQuery('#postsListWrapper .likeLink').on('click', function() {
+                
+            });
+
+
+        });
+    </script>
+@endsection
+
 @section('content')
     <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -8,8 +32,10 @@
             <small> by {{ $entity['name'] }} : [{{ $entity['title'] }}]</small>
         </h1>
 
+        <div id="postsListWrapper">
         @foreach ($posts as $post)
-            <div class="card mb-4">
+        
+            <div class="card mb-4 postItem">
                 <img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
                 <div class="card-body">
                     <h2 class="card-title">{{ $post->title }}</h2>
@@ -31,14 +57,18 @@
                 <div class="card-footer text-muted">
                     <div class="info">
                         <strong>Views:</strong> {{ $post->views }} |
-                        <strong>Likes:</strong> <a href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
+                        <strong>Likes:</strong> <a class="likeLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
                         <strong>Comments:</strong> {{ $post->comments->count() }}
                     </div>
                 </div>
             </div>
+        
         @endforeach
+        </div>
 
-        Show More
+        <div class="showMoreButton">
+            <a href="javascript:void(0);" class="btn btn-success">Show More Posts&rarr;</a>
+        </div>
 
     </div>
 @endsection
@@ -46,23 +76,23 @@
 @section('sorting')
 
 <!-- Sorting Widget -->
-<div class="card my-4">
+<div id="sortWrapper" class="card my-4">
     <h5 class="card-header">Sorting by : </h5>
     <div class="card-body">
         
         <div class="form-check">
             <label class="form-check-label">
-                <input name="date" type="checkbox" class="form-check-input" value="date" autovomplete="off">Date
+                <input name="sortDate" type="checkbox" class="form-check-input" value="date" autocomplete="off">Date
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input name="views" type="checkbox" class="form-check-input" value="views" autovomplete="off">Views
+                <input name="sortViews" type="checkbox" class="form-check-input" value="views" autocomplete="off">Views
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input name="likes" type="checkbox" class="form-check-input" value="likes" autovomplete="off">Likes
+                <input name="sortLikes" type="checkbox" class="form-check-input" value="likes" autocomplete="off">Likes
             </label>
         </div>
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Frontend\MainController@indexAction')->name('frontend-main');
 Route::post('/', 'Frontend\MainController@postAction')->name('post-main');
+Route::post('/sort', 'Frontend\MainController@sortAction')->name('post-main-sort');
 
 Auth::routes();
 

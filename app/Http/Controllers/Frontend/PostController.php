@@ -25,6 +25,9 @@ class PostController extends Controller
             abort(404);
         }
 
+        $currentPost->views++;
+        $currentPost->save();
+
         $this->data['post'] = $currentPost;
 
         $categories = Category::all();
@@ -32,4 +35,12 @@ class PostController extends Controller
 
         return view('frontend.post', $this->data);
     }
+
+    public function likeAction(Request $request)
+    {
+        // самое правильное решение позволить ставить лайки только зарегистрированным пользователям (как это делается в социальных сетях).
+    }
+
+
+    
 }

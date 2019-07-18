@@ -33,7 +33,9 @@ class UserController extends Controller
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
             'name' => 'Author',
-            'title' => $user->name
+            'page' => 'authorPage',
+            'title' => $user->name,
+            'id' => $user->id
         ];
         return view('frontend.posts', $this->data);
     }
