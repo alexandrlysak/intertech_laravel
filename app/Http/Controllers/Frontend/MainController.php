@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Like;
 use App\Post;
 use App\Tag;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -40,9 +42,20 @@ class MainController extends Controller
             'title' => 'Main Page',
             'id' => NULL
         ];
+
+        foreach($posts as $post) {
+            $likes = Like::where(['post_id' => $post->id])->get();
+            $post->likes = count($likes);
+        }
+
         return view('frontend.posts', $this->data);
     }
 
+    /**
+     * @param Request $request
+     * @return Renderable|JsonResponse
+     * @throws \Throwable
+     */
     public function postAction(Request $request)
     {
         if(!$request->ajax()) {
@@ -107,12 +120,22 @@ class MainController extends Controller
 
         $posts = $query->get();
 
+        foreach($posts as $post) {
+            $likes = Like::where(['post_id' => $post->id])->get();
+            $post->likes = count($likes);
+        }
+
         return response()->json([
             'code' => 1,
             'html' => view('frontend.layouts.postsList', ['posts' => $posts])->render()
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return Renderable|JsonResponse
+     * @throws \Throwable
+     */
     public function sortAction(Request $request)
     {
         if(!$request->ajax()) {
@@ -121,7 +144,6 @@ class MainController extends Controller
 
         $requestData = $request->all();
 
-        
         $visible = intval($requestData['visible']);
         $id = $requestData['id'];
         $sortDate = $requestData['sortDate']== 'true';
@@ -175,11 +197,14 @@ class MainController extends Controller
 
         $posts = $query->get();
 
+        foreach($posts as $post) {
+            $likes = Like::where(['post_id' => $post->id])->get();
+            $post->likes = count($likes);
+        }
+
         return response()->json([
             'code' => 1,
             'html' => view('frontend.layouts.postsList', ['posts' => $posts])->render()
         ]);
-
-
     }
 }

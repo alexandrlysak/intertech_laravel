@@ -31,6 +31,7 @@
 
         @auth
         <span class="navbar-brand">Welcome</span>
+        <a href="">Logout</a>
         @endauth
 
         @guest

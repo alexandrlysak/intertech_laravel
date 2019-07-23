@@ -21,9 +21,12 @@
 	</div>
 	<div class="card-footer text-muted">
 		<div class="info">
+			<input type="hidden" class="postId" value="{{ $post->id }}">
 			<strong>Views:</strong> {{ $post->views }} |
 			@auth
-				<strong>Likes:</strong> <a href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
+				<strong>Likes:</strong>
+				<a class="likePostLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				<span id="postLikes_{{ $post->id }}">{{ $post->likes }}</span> |
 			@endauth
 				
 			@guest

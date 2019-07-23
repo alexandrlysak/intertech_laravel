@@ -10,8 +10,16 @@ use Auth;
 use Session;
 use Redirect;
 
+/**
+ * Class UloginController
+ * @package App\Http\Controllers\Frontend
+ */
 class UloginController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     */
 	public function loginAction(Request $request)
 	{
 		// Get information about user.

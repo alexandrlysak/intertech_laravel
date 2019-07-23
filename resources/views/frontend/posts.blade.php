@@ -8,15 +8,15 @@
         jQuery(document).ready(function() {
             
             jQuery('.showMoreButton a').on('click', function() {
-                showMorePosts( '{{ $entity['page'] }}', '{{url('/')}}', '{{ $entity["id"]}}');
+                showMorePosts( '{{ $entity['page'] }}', '{{url('/')}}', '{{ $entity["id"]}}', '{{ url('/post/like')}}');
             });
 
             jQuery('#sortWrapper input').on('change', function() {
-                sortingPosts('{{ $entity['page'] }}', '{{url('/sort')}}', '{{ $entity["id"]}}');
+                sortingPosts('{{ $entity['page'] }}', '{{url('/sort')}}', '{{ $entity["id"]}}', '{{ url('/post/like')}}');
             });
 
-            jQuery('#postsListWrapper .likeLink').on('click', function() {
-                
+            jQuery('#postsListWrapper .likePostLink').on('click', function() {
+                likePost(jQuery(this).closest('.info').find('input.postId').val(), '{{ url('/post/like')}}');
             });
 
 
@@ -34,6 +34,7 @@
 
         <div id="postsListWrapper">
         @foreach ($posts as $post)
+
         
             <div class="card mb-4 postItem">
                 <img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
@@ -56,9 +57,12 @@
                 </div>
                 <div class="card-footer text-muted">
                     <div class="info">
+                        <input type="hidden" class="postId" value="{{ $post->id }}">
                         <strong>Views:</strong> {{ $post->views }} |
                         @auth
-                            <strong>Likes:</strong> <a href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a> {{ $post->likes }} |
+                            <strong>Likes:</strong>
+                            <a class="likePostLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            <span id="postLikes_{{ $post->id }}">{{ $post->likes }}</span> |
                         @endauth
                             
                         @guest

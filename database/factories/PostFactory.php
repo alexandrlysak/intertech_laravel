@@ -19,6 +19,5 @@ $factory->define(Post::class, function (Faker $faker) {
         },
         'slug' => $faker->unique()->slug(),
         'views' => $faker->numberBetween(0, 20),
-        'likes' => $faker->numberBetween(0, 20)
     ];
 });

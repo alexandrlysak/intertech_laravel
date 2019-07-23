@@ -28,6 +28,10 @@ Route::post('/category', 'Frontend\CategoryController@postAction')->name('post-c
 
 Route::get('/post/{slug}', 'Frontend\PostController@postAction')->name('frontend-post');
 
+Route::post('/post/comment', 'Frontend\PostController@commentAction')->name('frontend-post-comment');
+Route::post('/post/answer', 'Frontend\PostController@answerAction')->name('frontend-post-answer');
+Route::post('/post/like', 'Frontend\PostController@likeAction')->name('frontend-post-like');
+
 Route::get('/author/{id}', 'Frontend\UserController@postsAction')->name('author-posts');
 Route::post('/author', 'Frontend\UserController@postAction')->name('post-author');
 
