@@ -29,6 +29,19 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+
+        DB::table('users')->insert([
+            'name' => 'user',
+            'email' => 'user@mail.com',
+            'password' => bcrypt('user'),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('admin'),
+        ]);
     }
 
     /**
@@ -38,8 +51,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('users');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

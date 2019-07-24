@@ -27,10 +27,10 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->unsignedBigInteger('author_id')->nullable()->comment('Post author id');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('category_id')->nullable()->comment('Post category id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
