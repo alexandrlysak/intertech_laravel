@@ -31,7 +31,11 @@
 
         @auth
         <span class="navbar-brand">Welcome</span>
-        <a href="">Logout</a>
+            <form action="{{ url('/logout') }}" method="post">
+                {{ csrf_field() }}
+                <button class="btn btn-link" type="submit">Logout</button>
+            </form>
+
         @endauth
 
         @guest
