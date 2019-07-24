@@ -23,12 +23,12 @@ class CategoryController extends Controller
      */
     public function categoryAction($slug)
     {
-        $currentCategory = Category::where(['slug' => $slug])->first();
+        $currentCategory = Category::where('slug', $slug)->first();
         if (!$currentCategory) {
             abort(404);
         }
 
-        $posts = Post::where(['category_id' => $currentCategory->id])->paginate(3);
+        $posts = Post::where('category_id', $currentCategory->id)->paginate(3);
         $this->data['posts'] = $posts;
 
         $categories = Category::all();
