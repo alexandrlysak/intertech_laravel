@@ -71,11 +71,11 @@ class MainController extends Controller
                 break;
 
             case 'categoryPage':
-                $query = Post::where(['category_id' => $id])->take(3);
+                $query = Post::where('category_id', $id)->take(3);
                 break;
 
             case 'authorPage':
-                $query = Post::where(['author_id' => $id])->take(3);
+                $query = Post::where('author_id', $id)->take(3);
                 break;
 
             case 'tagPage':
@@ -147,11 +147,11 @@ class MainController extends Controller
                 break;
 
             case 'categoryPage':
-                $query = Post::where(['category_id' => $id])->take($visible);
+                $query = Post::where('category_id', $id)->take($visible);
                 break;
 
             case 'authorPage':
-                $query = Post::where(['author_id' => $id])->take($visible);
+                $query = Post::where('author_id', $id)->take($visible);
                 break;
 
             case 'tagPage':
