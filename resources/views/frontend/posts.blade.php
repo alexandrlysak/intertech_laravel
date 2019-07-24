@@ -62,11 +62,11 @@
                         @auth
                             <strong>Likes:</strong>
                             <a class="likePostLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                            <span id="postLikes_{{ $post->id }}">{{ $post->likes }}</span> |
+                            <span id="postLikes_{{ $post->id }}">{{ $post->like->count() }}</span> |
                         @endauth
                             
                         @guest
-                            <strong>Likes:</strong> <i class="fa fa-heart-o" aria-hidden="true"></i> {{ $post->likes }} |
+                            <strong>Likes:</strong> <i class="fa fa-heart-o" aria-hidden="true"></i> {{ $post->like->comment() }} |
                         @endguest
                         <strong>Comments:</strong> {{ $post->comments->count() }}
                     </div>

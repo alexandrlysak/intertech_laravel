@@ -43,11 +43,6 @@ class MainController extends Controller
             'id' => NULL
         ];
 
-        foreach($posts as $post) {
-            $likes = Like::where(['post_id' => $post->id])->get();
-            $post->likes = count($likes);
-        }
-
         return view('frontend.posts', $this->data);
     }
 
@@ -120,11 +115,6 @@ class MainController extends Controller
 
         $posts = $query->get();
 
-        foreach($posts as $post) {
-            $likes = Like::where(['post_id' => $post->id])->get();
-            $post->likes = count($likes);
-        }
-
         return response()->json([
             'code' => 1,
             'html' => view('frontend.layouts.postsList', ['posts' => $posts])->render()
@@ -196,11 +186,6 @@ class MainController extends Controller
         } 
 
         $posts = $query->get();
-
-        foreach($posts as $post) {
-            $likes = Like::where(['post_id' => $post->id])->get();
-            $post->likes = count($likes);
-        }
 
         return response()->json([
             'code' => 1,
