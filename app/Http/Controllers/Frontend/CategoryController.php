@@ -23,10 +23,6 @@ class CategoryController extends Controller
      */
     public function categoryAction($slug)
     {
-        if (!$slug || $slug == '') {
-            abort(404);
-        }
-
         $currentCategory = Category::where(['slug' => $slug])->first();
         if (!$currentCategory) {
             abort(404);

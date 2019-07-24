@@ -28,10 +28,6 @@ class UserController extends Controller
      */
     public function postsAction($id)
     {
-        if (!$id || $id == '') {
-            abort(404);
-        }
-
         $user = User::where(['id' => $id])->first();
         if (!$user) {
             abort(404);
