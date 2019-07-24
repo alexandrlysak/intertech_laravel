@@ -32,10 +32,6 @@ class PostController extends Controller
      */
     public function postAction($slug)
     {
-        if (!$slug || $slug == '') {
-            abort(404);
-        }
-
         $currentPost = Post::where(['slug' => $slug])->first();
         if (!$currentPost) {
             abort(404);

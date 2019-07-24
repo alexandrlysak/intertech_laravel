@@ -24,10 +24,6 @@ class TagController extends Controller
      */
     public function postsAction($slug)
     {
-        if (!$slug || $slug == '') {
-            abort(404);
-        }
-
         $tag = Tag::where(['slug' => $slug])->first();
         if (!$tag) {
             abort(404);
