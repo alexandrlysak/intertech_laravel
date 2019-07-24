@@ -43,9 +43,6 @@ class PostController extends Controller
         $categories = Category::all();
         $this->data['categories'] = $categories;
 
-        $likes = Like::where(['post_id' => $currentPost->id])->get();
-        $currentPost->likes = count($likes);
-
         $this->data['post'] = $currentPost;
 
         return view('frontend.post', $this->data);
@@ -85,11 +82,11 @@ class PostController extends Controller
             $like->save();
         }
 
-        $likes = Like::where(['post_id' => $postId])->get();
+        $likes = Like::where(['post_id' => $postId])->get()->count();
 
         return response()->json([
             'code' => 1,
-            'likes' => count($likes)
+            'likes' => $likes
         ]);
     }
 

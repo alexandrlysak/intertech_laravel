@@ -34,8 +34,9 @@ class UserController extends Controller
         }
 
         $posts = Post::where(['author_id' => $user->id])->paginate(3);
+        $this->data['posts'] = $posts;
+
         $categories = Category::all();
-        
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
             'name' => 'Author',
@@ -44,11 +45,6 @@ class UserController extends Controller
             'id' => $user->id
         ];
 
-        foreach($posts as $post) {
-            $likes = Like::where(['post_id' => $post->id])->get();
-            $post->likes = count($likes);
-        }
-        $this->data['posts'] = $posts;
         return view('frontend.posts', $this->data);
     }
 }

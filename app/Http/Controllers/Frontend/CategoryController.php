@@ -29,8 +29,9 @@ class CategoryController extends Controller
         }
 
         $posts = Post::where(['category_id' => $currentCategory->id])->paginate(3);
-        $categories = Category::all();
+        $this->data['posts'] = $posts;
 
+        $categories = Category::all();
         $this->data['categories'] = $categories;
         $this->data['entity'] = [
             'name' => 'Category',
@@ -38,12 +39,6 @@ class CategoryController extends Controller
             'title' => $currentCategory->title,
             'id' => $currentCategory->id
         ];
-
-        foreach($posts as $post) {
-            $likes = Like::where(['post_id' => $post->id])->get();
-            $post->likes = count($likes);
-        }
-        $this->data['posts'] = $posts;
 
         return view('frontend.posts', $this->data);
     }
