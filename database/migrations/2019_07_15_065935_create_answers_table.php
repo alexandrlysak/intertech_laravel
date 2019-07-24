@@ -19,10 +19,10 @@ class CreateAnswersTable extends Migration
             $table->timestamps();
 
             $table->unsignedBigInteger('author_id')->nullable()->comment('Comment Answer author id');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');;
 
             $table->unsignedBigInteger('comment_id')->nullable()->comment('Comment Answer parent comment id');
-            $table->foreign('comment_id')->references('id')->on('comments');
+            $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade')->onUpdate('cascade');;
         });
     }
 

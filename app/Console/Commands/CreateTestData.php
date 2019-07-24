@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class CreateTestData extends Command
@@ -12,7 +13,7 @@ class CreateTestData extends Command
      *
      * @var string
      */
-    protected $signature = 'create:data';
+    protected $signature = 'create:data {--refresh}';
 
     /**
      * The console command description.
@@ -38,15 +39,32 @@ class CreateTestData extends Command
      */
     public function handle()
     {
-        $path = public_path().'/storage/images';
+        $path = public_path().'/storage';
         
-        if (File::exists($path)) {
-            File::deleteDirectory($path);
+        if ($this->option('refresh')) {
+
+            if (!File::exists($path)) {
+                $this->call('storage:link');
+            }
+
+            if (File::exists($path.'/images')) {
+                File::deleteDirectory($path.'/images');
+                File::makeDirectory($path.'/images', $mode = 0777, true, true);
+            }
+
+            $columnName = 'Tables_in_' . env('DB_DATABASE');
+            $tables = DB::select('SHOW TABLES');
+
+            DB::statement("SET foreign_key_checks=0");
+            foreach ($tables as $table) {
+                if ($table->$columnName == 'migrations' || $table->$columnName == 'users') {
+                    continue;
+                }
+                DB::table($table->$columnName)->truncate();
+            }
+            DB::statement("SET foreign_key_checks=1");
         }
-        $this->call('storage:link');
-        
-        File::makeDirectory($path, $mode = 0777, true, true);
-        
-        $this->call('migrate:refresh', ['--seed' => 'default']);
+
+        $this->call('db:seed');
     }
 }
