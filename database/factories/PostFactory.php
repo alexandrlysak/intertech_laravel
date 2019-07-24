@@ -10,7 +10,7 @@ use Faker\Generator as Faker;
 $factory->define(Post::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(5),
-        'thumbnail' => $faker->image('storage/app/public/images',400,300, null, false),
+        'thumbnail' => $faker->image(storage_path('app/public/images'),400,300, null, false),
         'shortDescription' => $faker->realText(100),
         'fullDescription' => $faker->realText(2000),
         'author_id' => function () {
