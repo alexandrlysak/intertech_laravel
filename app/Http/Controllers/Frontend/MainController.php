@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Category;
 use App\Http\Controllers\Controller;
-use App\Like;
 use App\Post;
 use App\Tag;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\View\View;
 
 class MainController extends Controller
 {
@@ -22,17 +21,15 @@ class MainController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        //
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return Renderable
+     * @return Factory|View
      */
     public function indexAction()
     {
-        $posts = Post::orderBy('updated_at', 'desc')->take(3)->get();
+        $posts = Post::paginate(3);
         $categories = Category::all();
         $this->data['posts'] = $posts;
         $this->data['categories'] = $categories;
@@ -48,7 +45,7 @@ class MainController extends Controller
 
     /**
      * @param Request $request
-     * @return Renderable|JsonResponse
+     * @return Factory|JsonResponse|View
      * @throws \Throwable
      */
     public function postAction(Request $request)
@@ -58,38 +55,34 @@ class MainController extends Controller
         }
 
         $requestData = $request->all();
+        $action = $requestData['action'];
         $visible = intval($requestData['visible']);
         $id = $requestData['id'];
         $sortDate = $requestData['sortDate']== 'true';
         $sortViews = $requestData['sortViews'] == 'true';
         $sortLikes = $requestData['sortLikes'] == 'true';
 
+        $query = Post::query();
+
         switch ($requestData['entity']) {
 
             case 'mainPage':
-                $query = Post::take(3);
                 break;
 
             case 'categoryPage':
-                $query = Post::where('category_id', $id)->take(3);
+                $query->where('category_id', $id);
                 break;
 
             case 'authorPage':
-                $query = Post::where('author_id', $id)->take(3);
+                $query->where('author_id', $id);
                 break;
 
             case 'tagPage':
                 $tag = Tag::find($id);
-                if (!$tag) {
-                    return response()->json([
-                        'code' => 0
-                    ]);
-                }
-                $query = Post::whereHas('tags', function($q) use ($tag) {
+                $query->whereHas('tags', function($q) use ($tag) {
                     $q->whereIn('tag_id', $tag);
-                })->take(3);
+                });
                 break;
-
             default:
                 return response()->json([
                     'code' => 0
@@ -109,86 +102,15 @@ class MainController extends Controller
             $query->orderBy('updated_at', 'desc');
         }
 
-        if ($visible > 0) {
-            $query->offset($visible);
+        if ($action == 'showMore') {
+            $posts = $query->paginate(3);
+        } else {
+            $posts = $query->paginate($visible);
         }
-
-        $posts = $query->get();
 
         return response()->json([
             'code' => 1,
-            'html' => view('frontend.layouts.postsList', ['posts' => $posts])->render()
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     * @return Renderable|JsonResponse
-     * @throws \Throwable
-     */
-    public function sortAction(Request $request)
-    {
-        if(!$request->ajax()) {
-            return $this->indexAction();
-        }
-
-        $requestData = $request->all();
-
-        $visible = intval($requestData['visible']);
-        $id = $requestData['id'];
-        $sortDate = $requestData['sortDate']== 'true';
-        $sortViews = $requestData['sortViews'] == 'true';
-        $sortLikes = $requestData['sortLikes'] == 'true';
-
-        switch ($requestData['entity']) {
-
-            case 'mainPage':
-                $query = Post::take($visible);
-                break;
-
-            case 'categoryPage':
-                $query = Post::where('category_id', $id)->take($visible);
-                break;
-
-            case 'authorPage':
-                $query = Post::where('author_id', $id)->take($visible);
-                break;
-
-            case 'tagPage':
-                $tag = Tag::find($id);
-                if (!$tag) {
-                    return response()->json([
-                        'code' => 0
-                    ]);
-                }
-                $query = Post::whereHas('tags', function($q) use ($tag) {
-                    $q->whereIn('tag_id', $tag);
-                })->take($visible);
-                break;
-
-            default:
-                return response()->json([
-                    'code' => 0
-                ]);
-                break;
-        }
-
-        if ($sortViews) {
-            $query->orderBy('views', 'desc');
-        }
-
-        if ($sortLikes) {
-            $query->orderBy('likes', 'desc');
-        } 
-
-        if ($sortDate) {
-            $query->orderBy('updated_at', 'desc');
-        } 
-
-        $posts = $query->get();
-
-        return response()->json([
-            'code' => 1,
+            'currentPage' => $posts->currentPage() + 1,
             'html' => view('frontend.layouts.postsList', ['posts' => $posts])->render()
         ]);
     }
