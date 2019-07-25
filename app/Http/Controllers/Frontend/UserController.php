@@ -28,12 +28,12 @@ class UserController extends Controller
      */
     public function postsAction($id)
     {
-        $user = User::where(['id' => $id])->first();
+        $user = User::where('id', $id)->first();
         if (!$user) {
             abort(404);
         }
 
-        $posts = Post::where(['author_id' => $user->id])->paginate(3);
+        $posts = Post::where('author_id', $user->id)->paginate(3);
         $this->data['posts'] = $posts;
 
         $categories = Category::all();

@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function postAction($slug)
     {
-        $currentPost = Post::where(['slug' => $slug])->first();
+        $currentPost = Post::where('slug', $slug)->first();
         if (!$currentPost) {
             abort(404);
         }
@@ -82,7 +82,7 @@ class PostController extends Controller
             $like->save();
         }
 
-        $likes = Like::where(['post_id' => $postId])->get()->count();
+        $likes = Like::where('post_id', $postId)->get()->count();
 
         return response()->json([
             'code' => 1,
