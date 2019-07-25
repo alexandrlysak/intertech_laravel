@@ -29,7 +29,7 @@ class TagController extends Controller
             abort(404);
         }
 
-        $posts = Post::whereHas('tags', function($q) use ($tag) {
+        $posts = Post::with(['comments', 'author', 'tags', 'like' ])->whereHas('tags', function($q) use ($tag) {
             $q->whereIn('tag_id', $tag);
         })->paginate(3);
         $this->data['posts'] = $posts;

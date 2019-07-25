@@ -11,7 +11,7 @@
         <div id="postsListWrapper">
         @foreach ($posts as $post)
 
-        
+
             <div class="card mb-4 postItem">
                 <img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
                 <div class="card-body">
@@ -40,7 +40,7 @@
                             <a class="likePostLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                             <span id="postLikes_{{ $post->id }}">{{ $post->like->count() }}</span> |
                         @endauth
-                            
+
                         @guest
                             <strong>Likes:</strong> <i class="fa fa-heart-o" aria-hidden="true"></i> {{ $post->like->count() }} |
                         @endguest
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-        
+
         @endforeach
         </div>
 
@@ -65,7 +65,7 @@
 <div id="sortWrapper" class="card my-4">
     <h5 class="card-header">Sorting by : </h5>
     <div class="card-body">
-        
+
         <div class="form-check">
             <label class="form-check-label">
                 <input name="sortDate" type="checkbox" class="form-check-input" value="date" autocomplete="off">Date
