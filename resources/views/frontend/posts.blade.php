@@ -66,7 +66,7 @@
                         @endauth
                             
                         @guest
-                            <strong>Likes:</strong> <i class="fa fa-heart-o" aria-hidden="true"></i> {{ $post->like->comment() }} |
+                            <strong>Likes:</strong> <i class="fa fa-heart-o" aria-hidden="true"></i> {{ $post->like->count() }} |
                         @endguest
                         <strong>Comments:</strong> {{ $post->comments->count() }}
                     </div>

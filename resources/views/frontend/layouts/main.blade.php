@@ -35,13 +35,11 @@
                 {{ csrf_field() }}
                 <button class="btn btn-link" type="submit">Logout</button>
             </form>
-
         @endauth
 
         @guest
-        <!-- ULogin widget -->
-        <div id="uLogin" data-ulogin="display=panel;theme=classic;fields=first_name,last_name;providers=vkontakte,odnoklassniki,mailru,facebook;hidden=other;redirect_uri={{ url('/ulogin') }};mobilebuttons=0;"></div>
-        <!-- END ULogin widget -->
+            <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-facebook"></i> Facebook</a> &nbsp;&nbsp;
+            <a href="{{ url('/auth/redirect/github') }}" class="btn btn-sm btn-outline-success"><i class="fa fa-github"></i> Github</a>
         @endguest
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"

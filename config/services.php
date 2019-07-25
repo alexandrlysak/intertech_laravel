@@ -44,4 +44,16 @@ return [
         ],
     ],
 
+    'facebook' => [
+        'client_id' => '472315220232644',
+        'client_secret' => '0d7687f51f231dbd4a171fc681609064',
+        'redirect' => 'http://localhost:8000/callback/facebook',
+    ],
+
+    'github' => [
+        'client_id' => '7e383f8eaef0b1e7486d',
+        'client_secret' => '921339538dc6cbe3176b251909310c13df5ac745',
+        'redirect' => 'http://localhost:8000/callback/github',
+    ]
+
 ];
