@@ -1,31 +1,5 @@
 @extends('frontend.layouts.main')
 
-@section('scripts')
-    @parent
-    <script>
-
-        // Comments and answers forms on submit init
-        jQuery(document).ready(function() {
-            
-            jQuery('#commentForm').on('submit', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                sendComment(jQuery('#currentPostId').val(), '{{ url('/post/comment')}}', '{{ url('/post/answer')}}');
-            });
-
-            jQuery('.answerForm').on('submit', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                sendAnswer(jQuery('#currentPostId').val(), this, '{{ url('/post/answer')}}');
-            });
-
-            jQuery('.likePostLink').on('click', function() {
-                likePost(jQuery('#currentPostId').val(), '{{ url('/post/like')}}');
-            });
-        });
-    </script>
-@endsection
-
 @section('content')
 
     <!-- Post Content Column -->
@@ -50,7 +24,7 @@
         <div class="info">
             <strong>Tags: </strong>
             @foreach($post->tags as $tag)
-                <a href="">{{ $tag->title }}</a> |
+                <a href="{{ url('tag', ['slug' => $tag->slug]) }}">{{ $tag->title }}</a> |
             @endforeach
             <strong>Views:</strong> {{ $post->views }} |
             @auth
