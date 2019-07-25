@@ -29,7 +29,7 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        $posts = Post::paginate(3);
+        $posts = Post::with(['comments', 'author', 'tags', 'like'])->paginate(3);
         $categories = Category::all();
         $this->data['posts'] = $posts;
         $this->data['categories'] = $categories;
@@ -62,7 +62,7 @@ class MainController extends Controller
         $sortViews = $requestData['sortViews'] == 'true';
         $sortLikes = $requestData['sortLikes'] == 'true';
 
-        $query = Post::query();
+        $query = Post::query()->with(['comments', 'author', 'tags', 'like' ]);
 
         switch ($requestData['entity']) {
 

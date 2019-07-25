@@ -32,7 +32,8 @@ class PostController extends Controller
      */
     public function postAction($slug)
     {
-        $currentPost = Post::where('slug', $slug)->first();
+        $currentPost = Post::with('comments.author', 'comments.answers.author')->where('slug', $slug)->first();
+
         if (!$currentPost) {
             abort(404);
         }
@@ -42,7 +43,6 @@ class PostController extends Controller
 
         $categories = Category::all();
         $this->data['categories'] = $categories;
-
         $this->data['post'] = $currentPost;
 
         return view('frontend.post', $this->data);

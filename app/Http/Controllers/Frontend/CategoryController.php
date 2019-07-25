@@ -28,7 +28,7 @@ class CategoryController extends Controller
             abort(404);
         }
 
-        $posts = Post::where('category_id', $currentCategory->id)->paginate(3);
+        $posts = Post::with(['comments', 'author', 'tags', 'like' ])->where('category_id', $currentCategory->id)->paginate(3);
         $this->data['posts'] = $posts;
 
         $categories = Category::all();

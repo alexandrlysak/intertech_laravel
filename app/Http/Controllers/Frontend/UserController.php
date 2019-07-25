@@ -33,7 +33,7 @@ class UserController extends Controller
             abort(404);
         }
 
-        $posts = Post::where('author_id', $user->id)->paginate(3);
+        $posts = Post::with(['comments', 'author', 'tags', 'like' ])->where('author_id', $user->id)->paginate(3);
         $this->data['posts'] = $posts;
 
         $categories = Category::all();
