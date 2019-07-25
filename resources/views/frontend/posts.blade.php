@@ -1,29 +1,5 @@
 @extends('frontend.layouts.main')
 
-@section('scripts')
-    @parent
-    <script>
-
-        // Show More posts init
-        jQuery(document).ready(function() {
-            
-            jQuery('.showMoreButton a').on('click', function() {
-                showMorePosts( '{{ $entity['page'] }}', '{{url('/')}}', '{{ $entity["id"]}}', '{{ url('/post/like')}}');
-            });
-
-            jQuery('#sortWrapper input').on('change', function() {
-                sortingPosts('{{ $entity['page'] }}', '{{url('/sort')}}', '{{ $entity["id"]}}', '{{ url('/post/like')}}');
-            });
-
-            jQuery('#postsListWrapper .likePostLink').on('click', function() {
-                likePost(jQuery(this).closest('.info').find('input.postId').val(), '{{ url('/post/like')}}');
-            });
-
-
-        });
-    </script>
-@endsection
-
 @section('content')
     <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -39,7 +15,7 @@
             <div class="card mb-4 postItem">
                 <img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
                 <div class="card-body">
-                    <h2 class="card-title">{{ $post->title }}</h2>
+                    <h2 class="card-title">{{ $post->title }}[{{ $post->id }}]</h2>
                     <p class="card-text">{{ $post->shortDescription }}</p>
                     <a href="{{ url('post', ['slug' => $post->slug]) }}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
@@ -77,7 +53,7 @@
         </div>
 
         <div class="showMoreButton">
-            <a href="javascript:void(0);" class="btn btn-success">Show More Posts&rarr;</a>
+            <a href="javascript:void(0);" data-sender="{{ $entity['page'] }}" data-sender-id="{{ $entity["id"]}}" class="btn btn-success">Show More Posts&rarr;</a>
         </div>
 
     </div>

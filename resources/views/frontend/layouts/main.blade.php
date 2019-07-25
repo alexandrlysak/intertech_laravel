@@ -19,7 +19,6 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('/assets/css/blog-home.css') }}" rel="stylesheet">
 
-
 </head>
 
 <body>
@@ -71,6 +70,8 @@
 <div class="container">
 
     <div class="row">
+
+        <input type="hidden" id="currentPaginationPage" value="2" autocomplete="off">
 
         @section('content')
 
@@ -144,8 +145,6 @@
 <script src="{{ asset('/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-
-<script src="//ulogin.ru/js/ulogin.js"></script>
 
 @show
 

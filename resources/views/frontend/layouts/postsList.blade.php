@@ -3,7 +3,7 @@
 <div class="card mb-4 postItem">
 	<img class="card-img-top" src="{{ url('/storage/images/'.$post->thumbnail) }}" alt="{{ $post->title }}">
 	<div class="card-body">
-		<h2 class="card-title">{{ $post->title }}</h2>
+		<h2 class="card-title">{{ $post->title }}[{{ $post->id }}]</h2>
 		<p class="card-text">{{ $post->shortDescription }}</p>
 		<a href="{{ url('post', ['slug' => $post->slug]) }}" class="btn btn-primary">Read More &rarr;</a>
 	</div>
