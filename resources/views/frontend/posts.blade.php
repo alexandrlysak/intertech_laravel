@@ -37,7 +37,7 @@
                         <strong>Views:</strong> {{ $post->views }} |
                         @auth
                             <strong>Likes:</strong>
-                            <a class="likePostLink" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            <a class="likePostLink" data-post-id="{{ $post->id }}" href="javascript:void(0);" title="Like this post"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                             <span id="postLikes_{{ $post->id }}">{{ $post->like->count() }}</span> |
                         @endauth
 
