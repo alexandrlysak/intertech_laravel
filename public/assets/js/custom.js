@@ -15,21 +15,49 @@ jQuery(document).ready(function() {
 		sendAnswer(jQuery('#currentPostId').val(), this, '/post/answer');
 	});
 
-	jQuery('.likePostLink').on('click', function() {
-		likePost(jQuery('#currentPostId').val(), '/post/like');
-	});
+
 
 	jQuery('.showMoreButton a').on('click', function() {
 		let sender = jQuery('.showMoreButton a').data('sender');
 		let senderId = jQuery('.showMoreButton a').data('sender-id');
-		showMorePosts( sender, '/', senderId, '/post/like');
+		showMorePosts( sender, '/', senderId);
 	});
 
 	jQuery('#sortWrapper input').on('change', function() {
 		let sender = jQuery('.showMoreButton a').data('sender');
 		let senderId = jQuery('.showMoreButton a').data('sender-id');
-		sortingPosts(sender, '/', senderId, '/post/like');
+		sortingPosts(sender, '/', senderId);
 	});
+
+
+	jQuery('#postsListWrapper').on('click', '.likePostLink', function() {
+
+		let postId = jQuery(this).data('post-id');
+		jQuery.ajax({
+			url : '/post/like',
+			headers: {
+				'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+			},
+			method: 'POST',
+			dataType: 'JSON',
+			data: {
+				postId: postId
+			},
+			success: function(response) {
+				if (response.code === 1) {
+					jQuery('#postLikes_'+postId).html(response.likes);
+				} else {
+					alert("Error save data!!!");
+				}
+			},
+			error: function(response) {
+				console.log('ERROR');
+				console.log(response);
+				alert("Error save data!!!");
+			}
+		});
+	});
+
 });
 
 /**
@@ -38,7 +66,7 @@ jQuery(document).ready(function() {
  * @param id
  * @param likeAjaxUrl
  */
-function showMorePosts(entity, url, id, likeAjaxUrl)
+function showMorePosts(entity, url, id)
 {
     jQuery.ajax({
     	url : url,
@@ -60,11 +88,6 @@ function showMorePosts(entity, url, id, likeAjaxUrl)
     	success: function(response) {
     		if (response.code === 1) {
     			jQuery('#postsListWrapper').append(response.html);
-
-				jQuery('.likePostLink').on('click', function() {
-					likePost(jQuery(this).closest('.info').find('input.postId').val(), '/post/like');
-				});
-
 				jQuery('#currentPaginationPage').val(response.currentPage);
     		}
     	},
@@ -81,7 +104,7 @@ function showMorePosts(entity, url, id, likeAjaxUrl)
  * @param id
  * @param likeAjaxUrl
  */
-function sortingPosts(entity, url, id, likeAjaxUrl)
+function sortingPosts(entity, url, id)
 {
 	jQuery.ajax({
     	url : url,
@@ -103,10 +126,6 @@ function sortingPosts(entity, url, id, likeAjaxUrl)
     	success: function(response) {
     		if (response.code === 1) {
     			jQuery('#postsListWrapper').html(response.html);
-
-				jQuery('.likePostLink').on('click', function() {
-					likePost(jQuery(this).closest('.info').find('input.postId').val(), likeAjaxUrl);
-				});
     		}
     	},
     	error: function(response) {
@@ -186,37 +205,6 @@ function sendAnswer(postId, object, ajaxUrl) {
 				jQuery('.answersWrapper[data-comment-id='+commentId+']').prepend(response.html);
 
 				jQuery(object).closest('.answerForm').find('textarea').val('');
-			} else {
-				alert("Error save data!!!");
-			}
-		},
-		error: function(response) {
-			console.log('ERROR');
-			console.log(response);
-			alert("Error save data!!!");
-		}
-	});
-}
-
-/**
- * @param postId
- * @param ajaxUrl
- */
-function likePost(postId, ajaxUrl)
-{
-	jQuery.ajax({
-		url : '/post/like',
-		headers: {
-			'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-		},
-		method: 'POST',
-		dataType: 'JSON',
-		data: {
-			postId: postId
-		},
-		success: function(response) {
-			if (response.code === 1) {
-				jQuery('#postLikes_'+postId).html(response.likes);
 			} else {
 				alert("Error save data!!!");
 			}

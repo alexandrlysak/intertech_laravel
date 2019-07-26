@@ -78,10 +78,10 @@ class MainController extends Controller
                 break;
 
             case 'tagPage':
-                $tag = Tag::find($id);
-                $query->whereHas('tags', function($q) use ($tag) {
-                    $q->whereIn('tag_id', $tag);
+                $query->whereHas('tags', function($q) use ($id) {
+                    $q->where('tag_id', $id);
                 });
+
                 break;
             default:
                 return response()->json([
